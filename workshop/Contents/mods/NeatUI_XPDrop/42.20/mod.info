@@ -1,0 +1,9 @@
+name=NeatUI XP Drop
+id=NeatUI_XPDrop
+poster=poster.png
+icon=icon.png
+modversion=1.0.0 (STABLE)
+description=NeatUI XP Drop: a standalone, NeatUI-themed XP bar. Rounded Neat panels, orange accent, a live progress bar and a clean config window. <LINE> Every time you earn XP the panel switches to that skill and floats the amount above itself with the skill icon; level, progress bar and the exact readout stay on screen. Numbers that arrive together are staggered so they never overlap. <LINE> Right-click the panel for the settings: switch individual skills on or off, toggle a whole category at once, lock size and position, or hide the panel - hidden, it collapses to a small badge you click to bring it back. <LINE> Options > Mods adds auto-hide, colour pickers for the bar gradient and the panel text, reset position, and hide the mod completely. <LINE> Drag the corner grip to resize. Ships with a bundled OSRS-style skill icon set and a drawn badge for anything missing. <LINE> Depends only on the NeatUI Framework. Client-side only. Localized in all official game languages.
+author=Gimmi
+versionMin=42.20
+require=\NeatUI_Framework

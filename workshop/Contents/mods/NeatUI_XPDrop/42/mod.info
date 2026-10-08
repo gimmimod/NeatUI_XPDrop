@@ -1,0 +1,10 @@
+name=NeatUI XP Drop
+id=NeatUI_XPDrop
+poster=poster.png
+icon=icon.png
+modversion=1.0.0
+description=NeatUI XP Drop: a standalone, NeatUI-themed XP bar. Rounded Neat panels, orange accent, dynamic progress bar and a clean config window. <LINE> Depends only on the NeatUI Framework. Ships with a bundled OSRS-style skill icon set; when an icon is missing, a built-in fallback badge is shown. <LINE> Localized in all official game languages.
+author=Gimmi
+versionMin=42.15
+versionMax=42.19
+require=\NeatUI_Framework
