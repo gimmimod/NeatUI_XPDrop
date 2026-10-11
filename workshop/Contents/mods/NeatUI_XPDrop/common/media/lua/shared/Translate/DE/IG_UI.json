@@ -44,10 +44,10 @@
     "IGUI_NeatXP_Opt_StackAbove_Tooltip": "Die zusätzlichen Panels erscheinen über dem Hauptpanel statt darunter. Nützlich, wenn du das Panel unten am Bildschirm hältst.",
     "IGUI_NeatXP_Opt_DropDown": "Zahlen unter dem Panel",
     "IGUI_NeatXP_Opt_DropDown_Tooltip": "Die Zahlen fallen unter das Panel, statt darüber aufzusteigen. Nützlich, wenn du das Panel am oberen Rand hältst.",
-    "IGUI_NeatXP_Opt_DropSize": "Zahlengröße",
-    "IGUI_NeatXP_Opt_DropSize_Tooltip": "Wie groß die XP-Zahlen sind, über dem Panel oder über deiner Figur.",
-    "IGUI_NeatXP_Opt_DropSize_Small": "Klein",
-    "IGUI_NeatXP_Opt_DropSize_Normal": "Normal",
-    "IGUI_NeatXP_Opt_DropSize_Large": "Groß",
-    "IGUI_NeatXP_Opt_DropSize_Huge": "Riesig"
+    "IGUI_NeatXP_Opt_DropSize": "Zahlengröße (normal: 100)",
+    "IGUI_NeatXP_Opt_DropSize_Tooltip": "Wie groß die XP-Zahlen sind, über dem Panel oder über deiner Figur. 100 ist die gewohnte Größe, 200 doppelt so groß.",
+    "IGUI_NeatXP_Opt_DropIconSize": "Größe der Fertigkeitssymbole (normal: 100)",
+    "IGUI_NeatXP_Opt_DropIconSize_Tooltip": "Wie groß das Fertigkeitssymbol neben jeder XP-Zahl ist. 100 ist die gewohnte Größe, 200 doppelt so groß.",
+    "IGUI_NeatXP_Opt_DropSpeed": "Zahlengeschwindigkeit (normal: 100)",
+    "IGUI_NeatXP_Opt_DropSpeed_Tooltip": "Wie schnell die XP-Zahlen aufsteigen und verblassen. 100 ist die gewohnte Geschwindigkeit, 200 doppelt so schnell."
 }

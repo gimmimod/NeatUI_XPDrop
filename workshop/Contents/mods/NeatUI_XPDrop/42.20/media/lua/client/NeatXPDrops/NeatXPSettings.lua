@@ -107,36 +107,58 @@ function NeatXPSettings.isDropOverPlayer()
     return o ~= nil and toBool(o:getValue())
 end
 
---- Quanto sono grandi i numeri, rispetto al testo del pannello. "Normale" e'
---- la misura di sempre (1.55); le altre ci stanno attorno. Valgono sopra il
---- pannello e sopra il personaggio: e' lo stesso carattere.
-local DROP_SIZES = { 1.15, 1.55, 2.1, 2.8 }
-local DROP_SIZE_DEFAULT = 2
+--[[ Quanto sono grandi i numeri e le icone del drop: due cursori, in centesimi
+    della misura di sempre (100). Valgono sopra il pannello e sopra il
+    personaggio.
 
--- `pending`: il valore appena scelto. Il pannello delle opzioni chiama i
--- richiami **prima** di scriverlo nell'opzione (MainOptions.lua, ramo combobox),
+    Nella 1.0.0 era una tendina a quattro misure, solo per i numeri, e due
+    cose non andavano: le misure erano caratteri del gioco, che finiscono al
+    Large, quindi "grandi" ed "enormi" erano lo stesso numero; e l'icona
+    dell'abilita' restava piccola qualunque cosa si scegliesse. Adesso il
+    numero si ingrandisce davvero (NeatXPStyle.fontForHeight) e l'icona ha il
+    suo cursore. La tendina aveva un altro nome (`dropSize`): la scelta fatta
+    li' non passa ai cursori, che partono da 100.
+]]
+local DROP_SCALE_MIN, DROP_SCALE_MAX, DROP_SCALE_STEP = 50, 300, 5
+
+-- Il valore appena scelto, per cursore. Il pannello delle opzioni chiama i
+-- richiami **prima** di scriverlo nell'opzione (MainOptions.lua, ramo slider),
 -- quindi li' getValue darebbe ancora quello vecchio.
-local pending = nil
+local pendingScale = {}
 
-function NeatXPSettings.dropSizeFactor()
-    local i = pending
-    if i == nil then
-        local o = getOption("dropSize")
-        i = o and tonumber(o:getValue()) or DROP_SIZE_DEFAULT
+local function scaleOf(id, lo, hi)
+    local v = pendingScale[id]
+    if v == nil then
+        local o = getOption(id)
+        v = o and tonumber(o:getValue())
     end
-    return DROP_SIZES[i] or DROP_SIZES[DROP_SIZE_DEFAULT]
+    v = tonumber(v) or 100
+    return math.max(lo or DROP_SCALE_MIN, math.min(hi or DROP_SCALE_MAX, v)) / 100
 end
 
---- Il pannello rifa' le sue misure quando cambia la misura dei numeri: i
+--- La velocita' dei numeri, in centesimi di quella di sempre (100): a 200 un
+--- numero sale e sparisce in mezzo secondo, a 50 in due. Si legge a ogni
+--- fotogramma (NeatXPBar:advanceAnimations), quindi non rifa' nessuna misura.
+local DROP_SPEED_MIN, DROP_SPEED_MAX = 25, 300
+
+function NeatXPSettings.dropSpeed() return scaleOf("dropSpeed", DROP_SPEED_MIN, DROP_SPEED_MAX) end
+
+--- La scala dei numeri del drop: 1 e' la misura di sempre.
+function NeatXPSettings.dropNumberScale() return scaleOf("dropScale") end
+
+--- La scala delle icone accanto ai numeri: 1 e' la misura di sempre.
+function NeatXPSettings.dropIconScale() return scaleOf("dropIconScale") end
+
+--- Il pannello rifa' le sue misure quando cambia una delle due scale: i
 --- caratteri si scelgono li', non a ogni fotogramma.
-local function applyDropSize(value)
-    pending = tonumber(value)
+local function applyDropScale(id, value)
+    pendingScale[id] = tonumber(value)
     local bar = NeatXPDrops and NeatXPDrops.bar
     if bar and bar.computeMetrics then
         bar:computeMetrics()
         if bar.layout then bar:layout() end
     end
-    pending = nil
+    pendingScale[id] = nil
 end
 
 --- Sostituisce i testi XP del gioco con i nostri. Accesa di serie.
@@ -578,15 +600,26 @@ local function register()
         "IGUI_NeatXP_Opt_OverPlayer_Tooltip"
     )
 
-    local dropSize = options:addComboBox(
-        "dropSize",
+    options:addSlider(
+        "dropScale",
         "IGUI_NeatXP_Opt_DropSize",
+        DROP_SCALE_MIN, DROP_SCALE_MAX, DROP_SCALE_STEP, 100,
         "IGUI_NeatXP_Opt_DropSize_Tooltip"
     )
-    dropSize:addItem("IGUI_NeatXP_Opt_DropSize_Small", false)
-    dropSize:addItem("IGUI_NeatXP_Opt_DropSize_Normal", true)
-    dropSize:addItem("IGUI_NeatXP_Opt_DropSize_Large", false)
-    dropSize:addItem("IGUI_NeatXP_Opt_DropSize_Huge", false)
+
+    options:addSlider(
+        "dropIconScale",
+        "IGUI_NeatXP_Opt_DropIconSize",
+        DROP_SCALE_MIN, DROP_SCALE_MAX, DROP_SCALE_STEP, 100,
+        "IGUI_NeatXP_Opt_DropIconSize_Tooltip"
+    )
+
+    options:addSlider(
+        "dropSpeed",
+        "IGUI_NeatXP_Opt_DropSpeed",
+        DROP_SPEED_MIN, DROP_SPEED_MAX, DROP_SCALE_STEP, 100,
+        "IGUI_NeatXP_Opt_DropSpeed_Tooltip"
+    )
 
     options:addTickBox(
         "replaceVanillaXp",
@@ -622,12 +655,16 @@ local function register()
         replaceOpt.onChangeApply = function(_, v) NeatXPSettings.applyCraftingXp(toBool(v)) end
     end
 
-    local sizeOpt = options:getOption("dropSize")
-    if sizeOpt then
-        sizeOpt.onChange      = function(_, v) applyDropSize(v) end
-        sizeOpt.onChangeApply = function(_, v) applyDropSize(v) end
+    -- Mentre si trascina il cursore il drop cambia gia' (onChange), e
+    -- all'Applica resta (onChangeApply).
+    for _, id in ipairs({ "dropScale", "dropIconScale", "dropSpeed" }) do
+        local opt = options:getOption(id)
+        if opt then
+            opt.onChange      = function(_, v) applyDropScale(id, v) end
+            opt.onChangeApply = function(_, v) applyDropScale(id, v) end
+        end
     end
-    applyDropSize()
+    applyDropScale("dropScale", nil)
 
     -- Colours: apply the stored value now, then on every live change.
     for optionId, meta in pairs(COLOR_OPTIONS) do

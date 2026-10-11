@@ -44,10 +44,10 @@
     "IGUI_NeatXP_Opt_StackAbove_Tooltip": "De extra panelen verschijnen boven het hoofdpaneel in plaats van eronder. Handig als je het paneel laag op het scherm houdt.",
     "IGUI_NeatXP_Opt_DropDown": "Getallen onder het paneel",
     "IGUI_NeatXP_Opt_DropDown_Tooltip": "De getallen dalen onder het paneel in plaats van erboven te stijgen. Handig als je het paneel tegen de bovenrand houdt.",
-    "IGUI_NeatXP_Opt_DropSize": "Grootte van getallen",
-    "IGUI_NeatXP_Opt_DropSize_Tooltip": "Hoe groot de XP-getallen zijn, boven het paneel of boven je personage.",
-    "IGUI_NeatXP_Opt_DropSize_Small": "Klein",
-    "IGUI_NeatXP_Opt_DropSize_Normal": "Normaal",
-    "IGUI_NeatXP_Opt_DropSize_Large": "Groot",
-    "IGUI_NeatXP_Opt_DropSize_Huge": "Enorm"
+    "IGUI_NeatXP_Opt_DropSize": "Grootte van getallen (normaal: 100)",
+    "IGUI_NeatXP_Opt_DropSize_Tooltip": "Hoe groot de XP-getallen zijn, boven het paneel of boven je personage. 100 is de gewone grootte, 200 twee keer zo groot.",
+    "IGUI_NeatXP_Opt_DropIconSize": "Grootte van vaardigheidsiconen (normaal: 100)",
+    "IGUI_NeatXP_Opt_DropIconSize_Tooltip": "Hoe groot het vaardigheidsicoon naast elk XP-getal is. 100 is de gewone grootte, 200 twee keer zo groot.",
+    "IGUI_NeatXP_Opt_DropSpeed": "Snelheid van getallen (normaal: 100)",
+    "IGUI_NeatXP_Opt_DropSpeed_Tooltip": "Hoe snel de XP-getallen stijgen en vervagen. 100 is de gewone snelheid, 200 twee keer zo snel."
 }

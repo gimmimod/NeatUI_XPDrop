@@ -156,6 +156,23 @@ function NeatXPStyle.pickFont(maxH)
     return chosen.font, chosen.h
 end
 
+--- Il carattere per un testo alto `targetH`, e lo zoom che ce lo porta.
+---
+--- I caratteri del gioco sono pochi, e il piu' grande e' il Large: scegliendo
+--- solo fra quelli (pickFont) una misura oltre il Large restava il Large, e
+--- "grandi" ed "enormi" erano lo stesso numero. Qui si prende il piu' piccolo
+--- alto ALMENO quanto serve e lo si rimpicciolisce di poco, che resta nitido;
+--- oltre il piu' grande, si ingrandisce lui.
+---@return any font, number fontH, number zoom
+function NeatXPStyle.fontForHeight(targetH)
+    if _ladder == nil then _ladder = buildLadder() end
+    local chosen = _ladder[#_ladder]
+    for _, e in ipairs(_ladder) do
+        if e.h >= targetH then chosen = e break end
+    end
+    return chosen.font, chosen.h, targetH / chosen.h
+end
+
 function NeatXPStyle.fontHeight(font)
     return getTextManager():getFontHeight(font)
 end

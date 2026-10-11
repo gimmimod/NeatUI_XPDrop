@@ -44,10 +44,10 @@
     "IGUI_NeatXP_Opt_StackAbove_Tooltip": "Los paneles extra aparecen encima del principal en vez de debajo. Útil si mantienes el panel en la parte baja de la pantalla.",
     "IGUI_NeatXP_Opt_DropDown": "Números debajo del panel",
     "IGUI_NeatXP_Opt_DropDown_Tooltip": "Los números bajan por debajo del panel en vez de subir por encima. Útil si mantienes el panel pegado al borde superior.",
-    "IGUI_NeatXP_Opt_DropSize": "Tamaño de los números",
-    "IGUI_NeatXP_Opt_DropSize_Tooltip": "El tamaño de los números de XP, sobre el panel o sobre tu personaje.",
-    "IGUI_NeatXP_Opt_DropSize_Small": "Pequeño",
-    "IGUI_NeatXP_Opt_DropSize_Normal": "Normal",
-    "IGUI_NeatXP_Opt_DropSize_Large": "Grande",
-    "IGUI_NeatXP_Opt_DropSize_Huge": "Enorme"
+    "IGUI_NeatXP_Opt_DropSize": "Tamaño de los números (normal: 100)",
+    "IGUI_NeatXP_Opt_DropSize_Tooltip": "El tamaño de los números de XP, sobre el panel o sobre tu personaje. 100 es el tamaño de siempre; 200, el doble.",
+    "IGUI_NeatXP_Opt_DropIconSize": "Tamaño de los iconos de habilidad (normal: 100)",
+    "IGUI_NeatXP_Opt_DropIconSize_Tooltip": "El tamaño del icono de la habilidad junto a cada número de XP. 100 es el tamaño de siempre; 200, el doble.",
+    "IGUI_NeatXP_Opt_DropSpeed": "Velocidad de los números (normal: 100)",
+    "IGUI_NeatXP_Opt_DropSpeed_Tooltip": "Qué tan rápido suben y se desvanecen los números de XP. 100 es la velocidad de siempre; 200, el doble."
 }

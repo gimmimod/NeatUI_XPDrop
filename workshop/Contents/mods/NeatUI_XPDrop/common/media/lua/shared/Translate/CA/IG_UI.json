@@ -44,10 +44,10 @@
     "IGUI_NeatXP_Opt_StackAbove_Tooltip": "Els panells addicionals apareixen sobre el principal en comptes de sota. Útil si mantens el panell a la part baixa de la pantalla.",
     "IGUI_NeatXP_Opt_DropDown": "Números sota el panell",
     "IGUI_NeatXP_Opt_DropDown_Tooltip": "Els números baixen sota el panell en comptes de pujar per sobre. Útil si mantens el panell enganxat a la vora superior.",
-    "IGUI_NeatXP_Opt_DropSize": "Mida dels números",
-    "IGUI_NeatXP_Opt_DropSize_Tooltip": "La mida dels números d'XP, sobre el panell o sobre el personatge.",
-    "IGUI_NeatXP_Opt_DropSize_Small": "Petita",
-    "IGUI_NeatXP_Opt_DropSize_Normal": "Normal",
-    "IGUI_NeatXP_Opt_DropSize_Large": "Gran",
-    "IGUI_NeatXP_Opt_DropSize_Huge": "Enorme"
+    "IGUI_NeatXP_Opt_DropSize": "Mida dels números (normal: 100)",
+    "IGUI_NeatXP_Opt_DropSize_Tooltip": "La mida dels números d'XP, sobre el panell o sobre el personatge. 100 és la mida de sempre; 200, el doble.",
+    "IGUI_NeatXP_Opt_DropIconSize": "Mida de les icones d'habilitat (normal: 100)",
+    "IGUI_NeatXP_Opt_DropIconSize_Tooltip": "La mida de la icona de l'habilitat al costat de cada número d'XP. 100 és la mida de sempre; 200, el doble.",
+    "IGUI_NeatXP_Opt_DropSpeed": "Velocitat dels números (normal: 100)",
+    "IGUI_NeatXP_Opt_DropSpeed_Tooltip": "Com de pressa pugen i s'esvaeixen els números d'XP. 100 és la velocitat de sempre; 200, el doble."
 }

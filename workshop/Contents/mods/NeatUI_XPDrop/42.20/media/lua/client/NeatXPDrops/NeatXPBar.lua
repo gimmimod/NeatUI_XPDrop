@@ -122,13 +122,39 @@ function NeatXPBar:computeMetrics()
     local targetTextH = self.baseFontH * s
 
     self.font, self.fontH = NeatXPStyle.pickFont(targetTextH)
-    local dropFactor = (NeatXPSettings and NeatXPSettings.dropSizeFactor)
-        and NeatXPSettings.dropSizeFactor() or 1.55
-    self.dropFont, self.dropFontH = NeatXPStyle.pickFont(targetTextH * dropFactor)
+
+    -- I numeri del drop: la misura di sempre (il carattere che 1.55 volte il
+    -- testo del pannello sceglieva) per la scala delle opzioni. A 100 e' lo
+    -- stesso carattere con zoom 1, cioe' identico a prima; altrove lo zoom fa
+    -- il resto (NeatXPStyle.fontForHeight). `dropFontH` e' l'altezza vera,
+    -- zoom compreso: i conti dei pannelli impilati la usano cosi'.
+    local numScale = (NeatXPSettings and NeatXPSettings.dropNumberScale)
+        and NeatXPSettings.dropNumberScale() or 1
+    local _, normalH = NeatXPStyle.pickFont(targetTextH * 1.55)
+    local fontH
+    self.dropFont, fontH, self.dropZoom = NeatXPStyle.fontForHeight(normalH * numScale)
+    self.dropFontH = math.max(1, round(fontH * self.dropZoom))
 
     self.pad      = math.max(4, round(6 * s))
     self.headerH  = math.max(round(22 * s), self.fontH + round(8 * s))
     self.iconSize = math.max(16, self.headerH - round(6 * s))
+
+    -- L'icona dell'abilita' accanto al numero: la sua misura di sempre per la
+    -- sua scala, indipendente da quella dei numeri.
+    local iconScale = (NeatXPSettings and NeatXPSettings.dropIconScale)
+        and NeatXPSettings.dropIconScale() or 1
+    self.dropIconSize = math.max(6, round(self.iconSize * 0.58 * iconScale))
+
+    -- La riga di un numero: alta quanto il piu' alto fra numero e icona. Tutti
+    -- i conti di spazio (scalino fra pannelli, verso, partenza) si fanno su
+    -- questa, non sull'altezza del solo testo: con l'icona ingrandita il conto
+    -- sul testo lasciava l'icona sopra il pannello.
+    self.dropRowH = math.max(self.dropFontH, self.dropIconSize)
+    -- Lo stacco dal pannello da cui il numero parte, e quanto viaggia: con
+    -- cielo libero, e dentro lo scalino fra due pannelli impilati.
+    self.dropGap         = math.max(2, round(3 * s))
+    self.dropTravel      = round(30 * s)
+    self.dropStackTravel = round(12 * s)
     self.barH     = self.fontH + round(6 * s)
     self.gap      = math.max(2, round(3 * s))
 
@@ -688,7 +714,9 @@ function NeatXPBar:advanceAnimations()
     if self._lastMs then dt = (now - self._lastMs) / 1000 end
     self._lastMs = now
     if dt < 0 then dt = 0 elseif dt > 0.1 then dt = 0.1 end
-    local step = dt / DROP_LIFETIME
+    -- La velocita' scelta nelle opzioni: a 200 un numero vive mezzo secondo.
+    local speed = (NeatXPSettings and NeatXPSettings.dropSpeed) and NeatXPSettings.dropSpeed() or 1
+    local step = dt * speed / DROP_LIFETIME
     local i = 1
     while i <= #self.drops do
         local d = self.drops[i]
@@ -747,11 +775,11 @@ function NeatXPBar:prerender()
     end
     self._pct = pct
 
-    -- Le righe in piu' prima dei drop e prima del pannello: stanno sotto a
-    -- tutto, e i numeri devono passargli sopra.
+    -- Le righe in piu' prima del pannello: stanno sotto a tutto. I numeri e
+    -- gli avvisi si disegnano DOPO il pannello (in fondo a questa funzione):
+    -- prima erano qui, il pannello ci passava sopra, e un numero grande nasceva
+    -- e spariva dietro di lui (segnalazione 1.0.1).
     self:renderExtraRows()
-    self:renderDrops()
-    self:renderHalos()
 
     -- Neat window anatomy: rounded MainTitle_BG header + FlatTop body below it.
     NeatXPStyle.drawWindow(self, 0, 0, w, h, hh, 0.95, NeatXPStyle.panelAlpha)
@@ -797,6 +825,9 @@ function NeatXPBar:prerender()
     -- Right edge stops short of the corner grip, which sits in the same strip.
     local barW = w - pad - (self.locked and pad or self.barRightReserve)
     NeatXPStyle.drawBar(self, pad, h - pad - barH, barW, barH, pct, readout, font)
+
+    self:renderDrops()
+    self:renderHalos()
 
     if self.tooltipVisible then
         self:renderTooltip(level, cur, max, pct)
@@ -848,22 +879,18 @@ end
     riga, e la misura viene dal conto che garantisce che non tocchino mai il
     pannello sopra.
 
-    Un numero della riga i parte a `i*step - START` e sale di `dropFontH`,
-    quindi il suo bordo alto arriva a `i*step - START - dropFontH`. Il fondo del
-    pannello sopra sta a `i*step - step + contentH`, cioe' `i*step - gap` dove
-    `gap = step - contentH`. Perche' non si tocchino serve
+    Un numero parte con la sua riga (alta dropRowH) a dropGap dal bordo del
+    suo pannello - fuori, mai sotto: fino alla 1.0.1 nasceva da dietro il
+    pannello, e con numeri o icone grandi meta' restava coperta - e viaggia di
+    dropStackTravel. Arriva quindi a dropGap + dropRowH + dropStackTravel dal
+    suo pannello, e un altro dropGap lo tiene staccato da quello dopo:
 
-        gap >= dropFontH + START + margine
+        gap = dropGap + dropRowH + dropStackTravel + dropGap
 
-    e questo e' esattamente il valore qui sotto, con quattro pixel di margine.
-    Cambiando START o la salita, va rifatto il conto.
+    Cambiando la partenza o la corsa, va rifatto il conto.
 ]]
-function NeatXPBar:stackDropStart()
-    return round(4 * self.scale)
-end
-
 function NeatXPBar:stackStep()
-    return self.contentH + self.dropFontH + self:stackDropStart() + 4
+    return self.contentH + self.dropGap * 2 + self.dropRowH + self.dropStackTravel
 end
 
 --[[ I due versi, e perche' il conto qui sopra vale lo stesso.
@@ -912,7 +939,7 @@ function NeatXPBar:computeStackDir()
     local screenH = getCore():getScreenHeight()
     local step = self:stackStep()
     local top = self:getAbsoluteY()
-    local margin = self.dropFontH + round(8 * self.scale)
+    local margin = self.dropGap + self.dropRowH + self.dropTravel
 
     local function fits(d)
         if d > 0 then return top + n * step + self.contentH + margin <= screenH end
@@ -940,7 +967,7 @@ function NeatXPBar:computeDropDir()
     local screenH = getCore():getScreenHeight()
     local top = self:getAbsoluteY()
     -- Quanto serve oltre il bordo del pannello perche' il numero si veda tutto.
-    local need = round(18 * self.scale) + round(30 * self.scale) + self.dropFontH
+    local need = self.dropGap + self.dropRowH + self.dropTravel
 
     local function room(d)
         if d > 0 then return top + self.contentH + need <= screenH end
@@ -1021,9 +1048,10 @@ end
 
 function NeatXPBar:renderDrops()
     local w = self.contentW
-    local size = math.floor(self.iconSize * 0.58)
+    local size = self.dropIconSize or math.floor(self.iconSize * 0.58)
     local fr, fg, fb = NeatXPStyle.getFillColor(self._pct or 0)
     local font, ih = self.dropFont, self.dropFontH
+    local zoom = self.dropZoom or 1
     local edge = math.max(4, round(6 * self.scale))
 
     -- Sopra il personaggio: i numeri lasciano il pannello e seguono lui. Le
@@ -1044,9 +1072,9 @@ function NeatXPBar:renderDrops()
         -- Cosi' due numeri di due abilita' diverse non si incrociano mai, e la
         -- cosa vale in tutte e quattro le combinazioni di verso.
         local amount = "+" .. string.format("%.1f", d.amount)
-        local tw = getTextManager():MeasureStringX(font, amount)
+        local tw = round(getTextManager():MeasureStringX(font, amount) * zoom)
 
-        local dy, right
+        local dy, right, iconY
         if ay then
             -- Sopra il personaggio: icona e numero, niente altro. La freccia in
             -- su non sta qui - li' significherebbe "sto salendo", che e' ovvio.
@@ -1057,36 +1085,39 @@ function NeatXPBar:renderDrops()
             -- pannello da scavalcare, e i numeri partono sempre verso l'alto.
             dy = ay - round(26 * self.scale) - round(30 * self.scale) * d.age
             right = ax + math.floor((tw + size + 2) / 2)
+            iconY = dy + math.floor((ih - size) / 2)
         else
+            -- La riga intera (numero e icona) parte FUORI dal pannello, a
+            -- dropGap dal suo bordo, e viaggia: con un pannello davanti solo
+            -- dentro lo scalino (stackStep), altrimenti di dropTravel.
             local row = self:rowOf(d.skill) or 0
-            local startOff, headroom
-            if self:rowHasNeighbour(row) then
-                -- C'e' un pannello davanti: si viaggia solo dentro lo scalino.
-                startOff, headroom = self:stackDropStart(), self.dropFontH
-            else
-                -- Cielo libero da quella parte.
-                startOff, headroom = round(18 * self.scale), round(30 * self.scale)
-            end
+            local rowH = self.dropRowH
+            local travel = self:rowHasNeighbour(row) and self.dropStackTravel or self.dropTravel
 
             local top = self:rowTop(row)
+            local rowY
             if self:dropDir() < 0 then
-                -- In su: `dy` e' il bordo alto del testo, e parte startOff sopra
-                -- il bordo alto del pannello.
-                dy = top - startOff - headroom * d.age
+                rowY = top - self.dropGap - rowH - travel * d.age
             else
-                -- In giu', speculare: e' il bordo **basso** del testo a stare
-                -- startOff sotto il bordo basso del pannello, quindi il bordo
-                -- alto sta una riga di testo piu' su.
-                dy = top + self.contentH - ih + startOff + headroom * d.age
+                rowY = top + self.contentH + self.dropGap + travel * d.age
             end
+            dy = rowY + math.floor((rowH - ih) / 2)
+            iconY = rowY + math.floor((rowH - size) / 2)
             right = w - edge
         end
 
-        self:drawTextRight(amount, right + 1, dy + 1, 0, 0, 0, a * 0.7, font)
-        self:drawTextRight(amount, right, dy, fr, fg, fb, a, font)
+        -- A zoom 1 il disegno di sempre; altrimenti lo stesso, ingrandito o
+        -- rimpicciolito, allineato a destra a mano (drawTextRight non ha zoom).
+        if zoom == 1 then
+            self:drawTextRight(amount, right + 1, dy + 1, 0, 0, 0, a * 0.7, font)
+            self:drawTextRight(amount, right, dy, fr, fg, fb, a, font)
+        else
+            self:drawTextZoomed(amount, right - tw + 1, dy + 1, zoom, 0, 0, 0, a * 0.7, font)
+            self:drawTextZoomed(amount, right - tw, dy, zoom, fr, fg, fb, a, font)
+        end
 
         local ix = right - tw - size - 2
-        NeatXPStyle.drawIcon(self, ix, dy + math.floor((ih - size) / 2), size, d.skill, d.name, a)
+        NeatXPStyle.drawIcon(self, ix, iconY, size, d.skill, d.name, a)
         end
     end
 end

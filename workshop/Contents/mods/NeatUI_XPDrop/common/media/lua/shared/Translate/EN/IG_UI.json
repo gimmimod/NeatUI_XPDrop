@@ -44,10 +44,10 @@
     "IGUI_NeatXP_Opt_StackAbove_Tooltip": "The extra panels appear above the main one instead of below. Use it when you keep the panel low on the screen.",
     "IGUI_NeatXP_Opt_DropDown": "Numbers below the panel",
     "IGUI_NeatXP_Opt_DropDown_Tooltip": "The numbers fall below the panel instead of rising above it. Use it when you keep the panel against the top edge.",
-    "IGUI_NeatXP_Opt_DropSize": "Number size",
-    "IGUI_NeatXP_Opt_DropSize_Tooltip": "How big the XP numbers are, over the panel or over your character.",
-    "IGUI_NeatXP_Opt_DropSize_Small": "Small",
-    "IGUI_NeatXP_Opt_DropSize_Normal": "Normal",
-    "IGUI_NeatXP_Opt_DropSize_Large": "Large",
-    "IGUI_NeatXP_Opt_DropSize_Huge": "Huge"
+    "IGUI_NeatXP_Opt_DropSize": "Number size (normal: 100)",
+    "IGUI_NeatXP_Opt_DropSize_Tooltip": "How big the XP numbers are, over the panel or over your character. 100 is the usual size, 200 twice as big.",
+    "IGUI_NeatXP_Opt_DropIconSize": "Skill icon size (normal: 100)",
+    "IGUI_NeatXP_Opt_DropIconSize_Tooltip": "How big the skill icon beside each XP number is. 100 is the usual size, 200 twice as big.",
+    "IGUI_NeatXP_Opt_DropSpeed": "Number speed (normal: 100)",
+    "IGUI_NeatXP_Opt_DropSpeed_Tooltip": "How fast the XP numbers rise and fade. 100 is the usual speed, 200 twice as fast."
 }

@@ -44,10 +44,10 @@
     "IGUI_NeatXP_Opt_StackAbove_Tooltip": "Panourile în plus apar deasupra celui principal, nu dedesubt. Util dacă ții panoul jos pe ecran.",
     "IGUI_NeatXP_Opt_DropDown": "Numere sub panou",
     "IGUI_NeatXP_Opt_DropDown_Tooltip": "Numerele coboară sub panou în loc să urce deasupra. Util dacă ții panoul lipit de marginea de sus.",
-    "IGUI_NeatXP_Opt_DropSize": "Mărimea numerelor",
-    "IGUI_NeatXP_Opt_DropSize_Tooltip": "Cât de mari sunt numerele XP, deasupra panoului sau a personajului.",
-    "IGUI_NeatXP_Opt_DropSize_Small": "Mică",
-    "IGUI_NeatXP_Opt_DropSize_Normal": "Normală",
-    "IGUI_NeatXP_Opt_DropSize_Large": "Mare",
-    "IGUI_NeatXP_Opt_DropSize_Huge": "Uriașă"
+    "IGUI_NeatXP_Opt_DropSize": "Mărimea numerelor (normal: 100)",
+    "IGUI_NeatXP_Opt_DropSize_Tooltip": "Cât de mari sunt numerele XP, deasupra panoului sau a personajului. 100 este mărimea obișnuită, 200 dublul ei.",
+    "IGUI_NeatXP_Opt_DropIconSize": "Mărimea pictogramelor de abilitate (normal: 100)",
+    "IGUI_NeatXP_Opt_DropIconSize_Tooltip": "Cât de mare este pictograma abilității de lângă fiecare număr XP. 100 este mărimea obișnuită, 200 dublul ei.",
+    "IGUI_NeatXP_Opt_DropSpeed": "Viteza numerelor (normal: 100)",
+    "IGUI_NeatXP_Opt_DropSpeed_Tooltip": "Cât de repede urcă și dispar numerele XP. 100 este viteza obișnuită, 200 dublul ei."
 }

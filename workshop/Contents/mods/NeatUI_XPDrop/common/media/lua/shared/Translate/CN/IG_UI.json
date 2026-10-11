@@ -44,10 +44,10 @@
     "IGUI_NeatXP_Opt_StackAbove_Tooltip": "额外面板显示在主面板上方，而不是下方。如果你把面板放在画面下缘，这个选项会有用。",
     "IGUI_NeatXP_Opt_DropDown": "数字在面板下方",
     "IGUI_NeatXP_Opt_DropDown_Tooltip": "数字向面板下方落下，而不是向上升起。如果你把面板贴在画面上缘，这个选项会有用。",
-    "IGUI_NeatXP_Opt_DropSize": "数字大小",
-    "IGUI_NeatXP_Opt_DropSize_Tooltip": "经验值数字的大小，无论显示在面板上方还是角色上方。",
-    "IGUI_NeatXP_Opt_DropSize_Small": "小",
-    "IGUI_NeatXP_Opt_DropSize_Normal": "普通",
-    "IGUI_NeatXP_Opt_DropSize_Large": "大",
-    "IGUI_NeatXP_Opt_DropSize_Huge": "特大"
+    "IGUI_NeatXP_Opt_DropSize": "数字大小（正常：100）",
+    "IGUI_NeatXP_Opt_DropSize_Tooltip": "经验值数字的大小，无论显示在面板上方还是角色上方。100 为原本大小，200 为两倍。",
+    "IGUI_NeatXP_Opt_DropIconSize": "技能图标大小（正常：100）",
+    "IGUI_NeatXP_Opt_DropIconSize_Tooltip": "每个经验值数字旁技能图标的大小。100 为原本大小，200 为两倍。",
+    "IGUI_NeatXP_Opt_DropSpeed": "数字速度（正常：100）",
+    "IGUI_NeatXP_Opt_DropSpeed_Tooltip": "经验值数字上升并消失的速度。100 为原本速度，200 为两倍。"
 }

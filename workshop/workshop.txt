@@ -1,6 +1,6 @@
 version=1
 id=3760545452
-title=NeatUI XP Drop [42.20]
+title=NeatUI XP Drop [42.21]
 tags=Build 42;Interface;Multiplayer;Skills;QoL
 visibility=public
 description=[h1]⚡ NeatUI XP Drop[/h1]
@@ -30,7 +30,7 @@ description=[/list]
 description=
 description=[h2]⚙️ Settings[/h2]
 description=[b]Right-click on the panel[/b]: switch individual skills on or off, click a category title to toggle a whole group, All / None, the lock that pins size and position, and the button that hides the panel.
-description=[b]Options → Mods → NeatUI XP Drop[/b]: auto-hide, stacked panels and which side they stack on, whether the numbers rise above the panel or fall below it, numbers over your character, replacing the game's own notices, colour pickers for the bar gradient and the panel text, reset position, and hide the mod completely.
+description=[b]Options → Mods → NeatUI XP Drop[/b]: auto-hide, stacked panels and which side they stack on, whether the numbers rise above the panel or fall below it, numbers over your character, the size of the numbers and of the skill icons and how fast they rise, replacing the game's own notices, colour pickers for the bar gradient and the panel text, reset position, and hide the mod completely.
 description=
 description=[h2]🧭 Where the numbers go[/h2]
 description=[list]

@@ -44,10 +44,10 @@
     "IGUI_NeatXP_Opt_StackAbove_Tooltip": "Další panely se objeví nad hlavním místo pod ním. Hodí se, když máš panel dole na obrazovce.",
     "IGUI_NeatXP_Opt_DropDown": "Čísla pod panelem",
     "IGUI_NeatXP_Opt_DropDown_Tooltip": "Čísla klesají pod panel, místo aby stoupala nad něj. Hodí se, když máš panel u horního okraje.",
-    "IGUI_NeatXP_Opt_DropSize": "Velikost čísel",
-    "IGUI_NeatXP_Opt_DropSize_Tooltip": "Jak velká jsou čísla XP, nad panelem i nad postavou.",
-    "IGUI_NeatXP_Opt_DropSize_Small": "Malá",
-    "IGUI_NeatXP_Opt_DropSize_Normal": "Normální",
-    "IGUI_NeatXP_Opt_DropSize_Large": "Velká",
-    "IGUI_NeatXP_Opt_DropSize_Huge": "Obrovská"
+    "IGUI_NeatXP_Opt_DropSize": "Velikost čísel (běžná: 100)",
+    "IGUI_NeatXP_Opt_DropSize_Tooltip": "Jak velká jsou čísla XP, nad panelem i nad postavou. 100 je obvyklá velikost, 200 dvojnásobná.",
+    "IGUI_NeatXP_Opt_DropIconSize": "Velikost ikon dovedností (běžná: 100)",
+    "IGUI_NeatXP_Opt_DropIconSize_Tooltip": "Jak velká je ikona dovednosti vedle každého čísla XP. 100 je obvyklá velikost, 200 dvojnásobná.",
+    "IGUI_NeatXP_Opt_DropSpeed": "Rychlost čísel (běžná: 100)",
+    "IGUI_NeatXP_Opt_DropSpeed_Tooltip": "Jak rychle čísla XP stoupají a mizí. 100 je obvyklá rychlost, 200 dvojnásobná."
 }
